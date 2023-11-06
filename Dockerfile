@@ -1,7 +1,7 @@
 FROM node:alpine as builder
 WORKDIR /usr/src
 RUN npm install -g pnpm
-COPY package.json pnpm-lock.yaml ./
+COPY package.json  ./
 RUN pnpm install
 COPY . .
 RUN pnpm run build
@@ -11,7 +11,7 @@ WORKDIR /usr/src
 RUN npm install -g pnpm
 COPY --from=builder /usr/src/dist ./dist
 COPY --from=builder /usr/src/hack ./
-COPY package.json pnpm-lock.yaml ./
+COPY package.json  ./
 RUN pnpm install
 ENV HOST=0.0.0.0 PORT=3000 NODE_ENV=production
 EXPOSE $PORT
